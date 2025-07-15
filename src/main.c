@@ -1,7 +1,11 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "window/wnd.h"
-#include "shaders/shader.h"
+#include <stdio.h>
+#include "wnd.h"
+#include "shader.h"
+#include "player.h"
+
+void DrawMesh(Mesh *mesh);
 
 int main(void){
     wnd_init();
@@ -9,10 +13,17 @@ int main(void){
         return -1; // Initialization failed
     }
     shader_init();
+    Mesh playerMesh = Player_InitMesh();
+
+    initCamera();
 
     while(!glfwWindowShouldClose(wnd_main)){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+        glUseProgram(ShaderID);
+        setCamera();
+        DrawPlayer(&playerMesh);
 
         glfwSwapBuffers(wnd_main);
         glfwPollEvents();
@@ -20,3 +31,4 @@ int main(void){
     glfwTerminate();
     return 0;
 }
+

@@ -1,16 +1,16 @@
 # Config
-PROJECT_NAME = GameEngine
+PROJECT_NAME = App
 CC = gcc
-CFLAGS = -I./include -I./src -Wall -Wextra -std=c99 -g
+CFLAGS = $(INC) -Wall -Wextra -std=c99 -g
 LDFLAGS = -Llibs -lglfw3dll -lglfw3 -lopengl32
 
 # Root Directories
 SRC = src
 BIN = bin
-INCLUDE = include
+SUBDIRS = src/shaders src/primatives src/window src/models include
+INC = $(patsubst %, -I%, $(SUBDIRS))
 SHADERS_SRC = $(SRC)/shaders
 
-SRC_CHILDREN = $(SRC)/window
 
 ALL_DIRS = $(SRC) $(SRC_CHILDREN)
 
@@ -23,9 +23,7 @@ OBJ_FILES = $(C_FILES:.c=.o)
 TARGET = $(BIN)/$(PROJECT_NAME)
 
 # Default target: build, clean objects, and run
-all: build clean-objects run
-
-
+Dev: dependencies build clean-objects run
 
 Prod: CFLAGS += -O2 -DNDEBUG
 Prod: clean build
@@ -39,8 +37,12 @@ Prod: clean build
 build: $(OBJ_FILES)
 	@mkdir -p $(BIN)
 	$(CC) $^ $(LDFLAGS) -o ${TARGET}
-	@echo "Copying required DLLs..."
+
+dependencies: 
+	@mkdir -p $(BIN)
 	@cp libs/*.dll $(BIN)/
+	@mkdir -p $(BIN)/shaders
+	@cp $(SHADERS_SRC)/*.glsl $(BIN)/shaders/
 
 # Clean object files only
 clean-objects:
