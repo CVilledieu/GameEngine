@@ -1,16 +1,16 @@
 #include <glad/glad.h>
-#include "primative.h"
+#include "mesh.h"
 #include "shader.h"
 
 
-static float STDOBJ_ModelMtx[] = {
+static float ModelMtx[] = {
     1.0f, 0.0f, 0.0f, 0.0f,
     0.0f, 1.0f, 0.0f, 0.0f,
     0.0f, 0.0f, 1.0f, 0.0f,
     0.0f, 0.0f, 0.0f, 1.0f
 };
 
-static float STDOBJ_Vertices[] = {
+static float Vertices[] = {
     // Positions          // Colors
     -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
      0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
@@ -18,21 +18,21 @@ static float STDOBJ_Vertices[] = {
     -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f
 };
 
-static unsigned int STDOBJ_Indices[] = { 0, 1, 2, 2, 3, 0};
+static unsigned int Indices[] = { 0, 1, 2, 2, 3, 0};
 
 
 
 Mesh CreateMesh() {
-    Mesh playerMesh;
-    playerMesh.VAO = 0;
-    playerMesh.IndexOrder = sizeof(STDOBJ_Indices) / sizeof(unsigned int);
-    playerMesh.Indices = STDOBJ_Indices;
-    playerMesh.VetexCount = sizeof(STDOBJ_Vertices) / sizeof(float);
-    playerMesh.Vertices = STDOBJ_Vertices;
-    
+    Mesh ObjMesh;
+    ObjMesh.VAO = 0;
+    ObjMesh.IndexOrder = sizeof(Indices) / sizeof(unsigned int);
+    ObjMesh.Indices = Indices;
+    ObjMesh.VetexCount = sizeof(Vertices) / sizeof(float);
+    ObjMesh.Vertices = Vertices;
+    ObjMesh.ModelMtx - ModelMtx;
 
-    SetModelVOs(&playerMesh);
-    return playerMesh;
+    SetModelVOs(&ObjMesh);
+    return ObjMesh;
 }
 
 

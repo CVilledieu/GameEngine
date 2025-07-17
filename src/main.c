@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include "wnd.h"
 #include "shader.h"
-#include "player.h"
+#include "mesh.h"
+#include "view.h"
 
-void DrawMesh(Mesh *mesh);
+
 
 int main(void){
     wnd_init();
@@ -13,7 +14,7 @@ int main(void){
         return -1; // Initialization failed
     }
     shader_init();
-    Mesh playerMesh = Player_InitMesh();
+    Mesh Player = CreateMesh();
 
     initCamera();
 
@@ -23,7 +24,7 @@ int main(void){
 
         glUseProgram(ShaderID);
         setCamera();
-        DrawPlayer(&playerMesh);
+        DrawMesh(&Player);
 
         glfwSwapBuffers(wnd_main);
         glfwPollEvents();

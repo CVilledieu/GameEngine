@@ -7,14 +7,17 @@ LDFLAGS = -Llibs -lglfw3dll -lglfw3 -lopengl32
 # Root Directories
 SRC = src
 BIN = bin
-SUBDIRS = src/shaders src/primatives src/window src/models include
-INC = $(patsubst %, -I%, $(SUBDIRS))
+
+# Auto-discover all source directories
+ALL_SRC_DIRS = $(shell find $(SRC) -type d)
+INC_PROJECT_HEADERS = $(addprefix -I, $(ALL_SRC_DIRS))
+INC = -I./include $(INC_PROJECT_HEADERS)
+
 SHADERS_SRC = $(SRC)/shaders
 
+OBJs = $(patsubst %.c, %.o, $(DIR_SRC:%=$(SRC)/%.c))
 
-ALL_DIRS = $(SRC) $(SRC_CHILDREN)
 
-OBJs = $(patsubst %.c, %.o, $(ALL_DIRS:%=$(SRC)/%.c))
 
 # File src
 C_FILES = $(shell find $(SRC) -name "*.c")

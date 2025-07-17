@@ -1,6 +1,5 @@
-#ifndef PRIMATIVE_H
-#define PRIMATIVE_H
-
+#ifndef MESH_H
+#define MESH_H
 
 
 typedef struct {
@@ -11,11 +10,6 @@ typedef struct {
     float *Vertices;
     float ModelMtx[16];
 } Mesh;
-
-
-//Camera.c
-void initCamera(void);
-void setCamera(void);
 
 //Mesh.c
 Mesh CreateMesh(void);

@@ -2,7 +2,7 @@
 #include "player.h"
 
 void callback_mainWnd_UserInput(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    if (action != GLFW_PRESS) {
+    if (action != GLFW_PRESS && action != GLFW_REPEAT) {
         return;
     }
     switch (key) {
