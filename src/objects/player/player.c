@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include "mesh.h"
 #include "shader.h"
+#include "view.h"
+#include <string.h>
 
 Mesh *Player;
 
@@ -24,10 +26,7 @@ static float Player_Vertices[] = {
 static unsigned int Player_Indices[] = { 0, 1, 2, 2, 3, 0};
 
 
-void Player_Init(void) {
-    Player = malloc(sizeof(Mesh));
-    *Player = CreateMesh();
-}
+
 Mesh Player_InitMesh() {
     Mesh playerMesh;
     playerMesh.VAO = 0;
@@ -35,13 +34,14 @@ Mesh Player_InitMesh() {
     playerMesh.Indices = Player_Indices;
     playerMesh.VetexCount = sizeof(Player_Vertices) / sizeof(float);
     playerMesh.Vertices = Player_Vertices;
-    
-
+    playerMesh.ModelMtx = malloc(16 * sizeof(float));
+    memcpy(playerMesh.ModelMtx, Player_ModelMtx, 16 * sizeof(float));
     SetModelVOs(&playerMesh);
     return playerMesh;
 }
 void DrawPlayer(Mesh *mesh) {
     glUniformMatrix4fv(glGetUniformLocation(ShaderID, "model"), 1, GL_FALSE, mesh->ModelMtx);
+    View_Set();
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

@@ -4,7 +4,7 @@
 
 //view.c
 void initCamera(void);
-void setCamera(void);
+void View_Set(void);
 
 
 

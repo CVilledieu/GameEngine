@@ -1,11 +1,12 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <stdio.h>
+
 #include "wnd.h"
 #include "shader.h"
 #include "mesh.h"
-#include "view.h"
 
+#include "draw.h"
 
 
 int main(void){
@@ -14,22 +15,13 @@ int main(void){
         return -1; // Initialization failed
     }
     shader_init();
-    Mesh Player = CreateMesh();
+    Mesh box = Box_CreateMesh();
 
-    initCamera();
 
     while(!glfwWindowShouldClose(wnd_main)){
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
-        glUseProgram(ShaderID);
-        setCamera();
-        DrawMesh(&Player);
-
-        glfwSwapBuffers(wnd_main);
-        glfwPollEvents();
+        Draw_Main(&box);
     }
     glfwTerminate();
     return 0;
-}
+}    
 

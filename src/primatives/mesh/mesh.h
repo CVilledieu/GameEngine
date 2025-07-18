@@ -8,12 +8,29 @@ typedef struct {
     unsigned int *Indices;
     int VetexCount;
     float *Vertices;
-    float ModelMtx[16];
+    float *ModelMtx;
 } Mesh;
 
-//Mesh.c
-Mesh CreateMesh(void);
+
+
+//General
+Mesh Mesh_Create(void);
 void SetModelVOs(Mesh *mesh);
 void DrawMesh(Mesh *mesh);
+void SetVAO(Mesh *mesh);
+void Move(Mesh *mesh, float x, float y, float z);
+
+
+//Mesh: Box
+Mesh Box_CreateMesh(void);
+
+//Mesh: Square
+Mesh Square_CreateMesh(void);
+
+
+
+
+
+
 
 #endif
