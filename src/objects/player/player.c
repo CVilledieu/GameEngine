@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include "mesh.h"
 #include "shader.h"
-#include "view.h"
+#include "camera.h"
 #include <string.h>
 
 Mesh *Player;
@@ -40,7 +40,7 @@ Mesh Player_InitMesh() {
     return playerMesh;
 }
 void DrawPlayer(Mesh *mesh) {
-    glUniformMatrix4fv(glGetUniformLocation(ShaderID, "model"), 1, GL_FALSE, mesh->ModelMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "model"), 1, GL_FALSE, mesh->ModelMtx);
     View_Set();
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);

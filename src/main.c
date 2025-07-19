@@ -6,7 +6,8 @@
 #include "shader.h"
 #include "mesh.h"
 
-#include "draw.h"
+
+
 
 
 int main(void){
@@ -14,13 +15,26 @@ int main(void){
     if (!wnd_main) {
         return -1; // Initialization failed
     }
-    shader_init();
+    Shader_Init();
+    glEnable(GL_DEPTH_TEST);
     Mesh box = Box_CreateMesh();
 
 
+    
     while(!glfwWindowShouldClose(wnd_main)){
-        Draw_Main(&box);
+        Shader_Use();
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+
+
+
+        glfwSwapBuffers(wnd_main);
+        glfwPollEvents();
     }
+
+
+    // Cleanup resources
+    Shader_Cleanup();
     glfwTerminate();
     return 0;
 }    

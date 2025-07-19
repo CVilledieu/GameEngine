@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "wnd.h"
+#include "player.h"
 
 GLFWwindow* wnd_main = (void*)0;
 
@@ -12,8 +12,27 @@ void callback_frameBufferSize(GLFWwindow* window, int width, int height) {
 }
 
 
+void callback_mainWnd_UserInput(GLFWwindow* window, int key, int scancode, int action, int mods) {
+    if (action != GLFW_PRESS && action != GLFW_REPEAT) {
+        return;
+    }
+    switch (key) {
+        case GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose(window, 1);
+            break;
+        default:
+            Player_Controls(key, action);
+            break;
+    }
+    //Voiding unused parameters for compiler warnings
+    (void)scancode;
+	(void)mods;
+}
+
+
 void wnd_init(){
     char *title = "EndMyGE";
+    
     if (!glfwInit()){
         printf("%s\n", "Failed to initialize GLFW");
         return;
@@ -38,3 +57,6 @@ void wnd_init(){
     glfwSetFramebufferSizeCallback(wnd_main, callback_frameBufferSize);
     glfwSetKeyCallback(wnd_main, callback_mainWnd_UserInput);
 }
+
+
+

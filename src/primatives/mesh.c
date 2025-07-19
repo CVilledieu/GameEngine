@@ -87,7 +87,7 @@ void SetModelVOs(Mesh *mesh) {
 }
 
 void DrawMesh(Mesh *mesh) {
-    glUniformMatrix4fv(glGetUniformLocation(ShaderID, "model"), 1, GL_FALSE, mesh->ModelMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "model"), 1, GL_FALSE, mesh->ModelMtx);
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

@@ -2,9 +2,11 @@
 #define SHADER_H
 
 
-extern unsigned int ShaderID;
 
-void shader_init();
 
+void Shader_Init();
+void Shader_Cleanup();
+void Shader_Use();
+unsigned int Shader_Get();
 
 #endif
