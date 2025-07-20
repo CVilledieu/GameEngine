@@ -9,6 +9,6 @@ void Player_Init(void);
 Mesh Player_InitMesh(void);
 void DrawPlayer(Mesh *mesh);
 
-void Player_Controls(int key, int action);
+
 
 #endif

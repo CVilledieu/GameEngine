@@ -5,10 +5,11 @@
 #include <stdlib.h>
 
 
+
 static float ModelMtx_Base[16] = {
-    1.0f, 0.0f, 0.0f, 0.0f,
-    0.0f, 1.0f, 0.0f, 0.0f,
-    0.0f, 0.0f, 1.0f, 0.0f,
+    0.05f, 0.0f, 0.0f, 0.0f,
+    0.0f, 0.05f, 0.0f, 0.0f,
+    0.0f, 0.0f, 0.5f, 0.0f,
     0.0f, 0.0f, 0.0f, 1.0f
 };
 
@@ -18,6 +19,7 @@ void Move(Mesh *mesh, float x, float y, float z) {
     mesh->ModelMtx[13] += y;
     mesh->ModelMtx[14] += z;
 }
+
 
 
 
@@ -87,7 +89,7 @@ void SetModelVOs(Mesh *mesh) {
 }
 
 void DrawMesh(Mesh *mesh) {
-    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "model"), 1, GL_FALSE, mesh->ModelMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Get(), "model"), 1, GL_FALSE, mesh->ModelMtx);
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
@@ -126,10 +128,10 @@ Mesh Square_CreateMesh() {
 
 
 //=================
-// Mesh: Box
+// Mesh: Cube
 //=================
 
-static float Box_Vertices[] ={
+static float Cube_Vertices[] ={
     -0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
      0.5f, -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
      0.5f,  0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f,
@@ -140,7 +142,7 @@ static float Box_Vertices[] ={
     -0.5f,  0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f,
 };
 
-static unsigned int Box_DrawIndices[] = {
+static unsigned int Cube_DrawIndices[] = {
     0, 1, 2, 2, 3, 0, // Back face
     4, 5, 6, 6, 7, 4, // Front face
     0, 1, 5, 5, 4, 0, // Bottom face
@@ -150,14 +152,14 @@ static unsigned int Box_DrawIndices[] = {
 };
 
 
-Mesh Box_CreateMesh() {
+Mesh Cube_CreateMesh() {
     Mesh newMesh;
     
-    newMesh.IndexOrder = sizeof(Box_DrawIndices) / sizeof(unsigned int);
-    newMesh.Indices = Box_DrawIndices;
+    newMesh.IndexOrder = sizeof(Cube_DrawIndices) / sizeof(unsigned int);
+    newMesh.Indices = Cube_DrawIndices;
 
-    newMesh.VetexCount = sizeof(Box_Vertices) / sizeof(float);
-    newMesh.Vertices = Box_Vertices;
+    newMesh.VetexCount = sizeof(Cube_Vertices) / sizeof(float);
+    newMesh.Vertices = Cube_Vertices;
 
     newMesh.ModelMtx = malloc(16 * sizeof(float));
     memcpy(newMesh.ModelMtx, ModelMtx_Base, 16 * sizeof(float));
@@ -166,3 +168,19 @@ Mesh Box_CreateMesh() {
     SetModelVOs(&newMesh);
     return newMesh;
 }
+
+typedef enum {
+    ENUM_SQUARE,
+    ENUM_CUBE,
+    
+} MeshType;
+
+/*
+Mesh Mesh_Create(MeshType type) {
+    switch (type) {
+        case ENUM_SQUARE:
+            return Square_CreateMesh();
+        case ENUM_CUBE:
+            return Cube_CreateMesh();            
+    }
+}*/

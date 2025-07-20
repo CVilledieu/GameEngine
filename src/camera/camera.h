@@ -6,6 +6,8 @@
 // Called before rendering
 void Camera_Set(void);
 
+void Camera_Init(void);
 
+void Player_Controls(int key, int action);
 
 #endif

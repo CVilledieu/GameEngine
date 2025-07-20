@@ -1,6 +1,10 @@
 #include <glad/glad.h>
+#include <GLFW/glfw3.h>
 #include "shader.h"
 #include "mesh.h"
+#include <math.h>
+
+
 
 
 //===================
@@ -14,8 +18,9 @@ static float ViewMtx[16] = {
     0.0f, 0.0f, 0.0f, 1.0f
 };
 
-void View_Init(){
-
+void ViewMtx_Update(){
+    ViewMtx[0] = 1.0f;
+    ViewMtx[5] = 1.0f;
 }
 
 //==================
@@ -30,28 +35,20 @@ static float ProjectionMtx[16] = {
 };
 
 
-
-
-// Orthographic Projection
-// Used for 2D rendering
-// Enlarge or shrink the clipping volume 
-static float orthoRight = 1.0f;
-static float orthoLeft = -1.0f;
-static float orthoTop = 1.0f;
-static float orthoBottom = -1.0f;
-static float orthoNear = -1.0f;
-
-
 // Perspective Projection
+static float aspectRatio = 8.0f / 6.0f; // Width / Height
 static float near = 0.1f;
 static float far = 100.0f;
-static float t = 0.000387851f; // near * tan(45.0f * (3.14159265358979323846f / 180.0f))
-static float top = 0.0000387851f;
+static float fov = 90.0f; // Field of View in degrees
 
 
 
+void ProjectionMtx_Update(){
+    float top = near * tanf(fov * 0.5f * (3.14159265358979323846f / 180.0f));
+    float bottom = -top;
+    float right = top * aspectRatio;
+    float left = -right;
 
-void Projection_Update(){
     ProjectionMtx[0] = (2.0f * near) / (right - left);
     ProjectionMtx[5] = (2.0f * near) / (top - bottom);
     ProjectionMtx[8] = (right + left) / (right - left);
@@ -68,13 +65,31 @@ void Projection_Update(){
 // Functions related to both the View and Projection Matrices
 
 void Camera_Init() {
-    View_Init();
-    Projection_Init();
+    ViewMtx_Update();
+    ProjectionMtx_Update();
 }
 
 void Camera_Set(){
 
-    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "view"), 1, GL_FALSE, ViewMtx);
-    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "projection"), 1, GL_FALSE, ProjectionMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Get(), "view"), 1, GL_FALSE, ViewMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Get(), "projection"), 1, GL_FALSE, ProjectionMtx);
 }
 
+void Player_Controls(int key, int action){
+    switch (key){
+        case GLFW_KEY_W:
+            ViewMtx[13] += 0.1f;
+            break;
+        case GLFW_KEY_S:
+            ViewMtx[13] -= 0.1f;
+            break;
+        case GLFW_KEY_A:
+            ViewMtx[12] -= 0.1f;
+            break;
+        case GLFW_KEY_D:
+            ViewMtx[12] += 0.1f;
+            break;
+        default:
+            break;
+    }
+}

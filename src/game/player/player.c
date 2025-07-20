@@ -40,29 +40,10 @@ Mesh Player_InitMesh() {
     return playerMesh;
 }
 void DrawPlayer(Mesh *mesh) {
-    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "model"), 1, GL_FALSE, mesh->ModelMtx);
-    View_Set();
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Get(), "model"), 1, GL_FALSE, mesh->ModelMtx);
+    Camera_Set();
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
-
-void Player_Controls(int key, int action){
-    switch (key){
-        case GLFW_KEY_W:
-            Player->ModelMtx[13] += 0.1f;
-            break;
-        case GLFW_KEY_S:
-            Player->ModelMtx[13] -= 0.1f;
-            break;
-        case GLFW_KEY_A:
-            Player->ModelMtx[12] -= 0.1f;
-            break;
-        case GLFW_KEY_D:
-            Player->ModelMtx[12] += 0.1f;
-            break;
-        default:
-            break;
-    }
-}

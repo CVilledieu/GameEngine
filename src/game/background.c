@@ -18,7 +18,7 @@ Mesh Createbackground() {
 }
 
 void DrawFP(Mesh *mesh) {
-    glUniformMatrix4fv(glGetUniformLocation(Shader_Use, "model"), 1, GL_FALSE, Background_ModelMtx);
+    glUniformMatrix4fv(glGetUniformLocation(Shader_Get(), "model"), 1, GL_FALSE, Background_ModelMtx);
     glBindVertexArray(mesh->VAO);
     glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);

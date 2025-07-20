@@ -21,8 +21,8 @@ void SetVAO(Mesh *mesh);
 void Move(Mesh *mesh, float x, float y, float z);
 
 
-//Mesh: Box
-Mesh Box_CreateMesh(void);
+//Mesh: Cube
+Mesh Cube_CreateMesh(void);
 
 //Mesh: Square
 Mesh Square_CreateMesh(void);

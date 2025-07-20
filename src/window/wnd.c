@@ -3,7 +3,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "player.h"
+#include "camera.h"
 
 GLFWwindow* wnd_main = (void*)0;
 

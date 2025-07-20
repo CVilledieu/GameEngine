@@ -5,5 +5,6 @@
 
 void SM_Init();
 void SM_Draw();
+void SM_LoadContext();
 
 #endif

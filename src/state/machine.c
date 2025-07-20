@@ -1,18 +1,13 @@
 #include "camera.h"
 
+#include "mesh.h"
+
+// World Meshs
+Mesh World_Meshes[2];
 
 
-typedef struct SM_Controller{
 
-} SM_Controller;
 
-typedef struct {
-    struct SM_Controller Controller;
-
-} SM_Context;
-
-struct SM_Context SM_Context;
-struct SM_Controller SM_Controller;
 
 
 void SM_LoadContext() {
@@ -25,6 +20,5 @@ void SM_Init() {
 
 
 void SM_Draw() {
-    View_Set();
+    Camera_Set();
 }
-
