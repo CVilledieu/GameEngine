@@ -1,26 +1,8 @@
 #include <glad/glad.h>
 #include "mesh.h"
 #include "shader.h"
-#include <string.h>
+
 #include <stdlib.h>
-
-
-
-static float ModelMtx_Base[16] = {
-    0.05f, 0.0f, 0.0f, 0.0f,
-    0.0f, 0.05f, 0.0f, 0.0f,
-    0.0f, 0.0f, 0.5f, 0.0f,
-    0.0f, 0.0f, 0.0f, 1.0f
-};
-
-
-void Move(Mesh *mesh, float x, float y, float z) {
-    mesh->ModelMtx[12] += x;
-    mesh->ModelMtx[13] += y;
-    mesh->ModelMtx[14] += z;
-}
-
-
 
 
 
@@ -48,21 +30,6 @@ void SetVAO(Mesh *mesh) {
     glBindVertexArray(0);
 }
 
-
-/*
-Mesh Mesh_Create() {
-    Mesh newMesh;
-    newMesh.VAO = 0;
-    newMesh.IndexOrder = sizeof(Square_DrawIndices) / sizeof(unsigned int);
-    newMesh.Indices = Square_DrawIndices;
-    newMesh.VetexCount = sizeof(Square_Vertices) / sizeof(float);
-    newMesh.Vertices = Square_Vertices;
-    newMesh.ModelMtx = malloc(16 * sizeof(float));
-    memcpy(newMesh.ModelMtx, ModelMtx_Base, 16 * sizeof(float));
-    SetModelVOs(&newMesh);
-    return newMesh;
-}
-*/
 
 void SetModelVOs(Mesh *mesh) {
     unsigned int VBO, EBO;
@@ -118,9 +85,6 @@ Mesh Square_CreateMesh() {
     newMesh.VetexCount = sizeof(Square_Vertices) / sizeof(float);
     newMesh.Vertices = Square_Vertices;
 
-    newMesh.ModelMtx = malloc(16 * sizeof(float));
-    memcpy(newMesh.ModelMtx, ModelMtx_Base, 16 * sizeof(float));
-
     newMesh.VAO = 0;
     SetModelVOs(&newMesh);
     return newMesh;
@@ -161,26 +125,7 @@ Mesh Cube_CreateMesh() {
     newMesh.VetexCount = sizeof(Cube_Vertices) / sizeof(float);
     newMesh.Vertices = Cube_Vertices;
 
-    newMesh.ModelMtx = malloc(16 * sizeof(float));
-    memcpy(newMesh.ModelMtx, ModelMtx_Base, 16 * sizeof(float));
-
     newMesh.VAO = 0;
     SetModelVOs(&newMesh);
     return newMesh;
 }
-
-typedef enum {
-    ENUM_SQUARE,
-    ENUM_CUBE,
-    
-} MeshType;
-
-/*
-Mesh Mesh_Create(MeshType type) {
-    switch (type) {
-        case ENUM_SQUARE:
-            return Square_CreateMesh();
-        case ENUM_CUBE:
-            return Cube_CreateMesh();            
-    }
-}*/

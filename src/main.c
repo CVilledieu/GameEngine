@@ -18,6 +18,7 @@ int main(void){
     Shader_Init();
     glEnable(GL_DEPTH_TEST);
     Mesh box = Cube_CreateMesh();
+    box.ModelMtx[10] = 0.22f; // Set initial position
     Mesh floor = Square_CreateMesh();
 
     Camera_Init();
