@@ -12,20 +12,11 @@ typedef struct {
 } Mesh;
 
 
-typedef enum {
-    SQUARE_MESH,
-    CUBE_MESH,
-} MeshType;
-
-
 
 
 //General
-void SetModelVOs(Mesh *mesh);
-void DrawMesh(Mesh *mesh);
-void SetVAO(Mesh *mesh);
 
-Mesh Mesh_Create(MeshType type);
+void DrawMesh(Mesh *mesh);
 
 
 //Mesh: Cube

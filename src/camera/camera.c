@@ -24,8 +24,24 @@ void ViewMtx_Update(){
 }
 
 //==================
-// Projection Matrix
-//
+// Perspective and Orthographic Projection Matrix
+//  
+
+/*
+x1 = (2 * near) / (right - left)
+x3 = -(right + left) / (right - left)
+y2 = (2 * near) / (bottom - top)
+y3 = -(top + bottom) / (bottom - top)
+z3 = far / (far - near)
+z4 = -(far * near) / (far - near)
+
+x1  0   0   0
+0   y2  0   0
+x3  y3  z3  w3  
+0   0   1  0
+
+*/
+
 
 static float ProjectionMtx[16] = {
     1.0f, 0.0f, 0.0f, 0.0f,
@@ -35,7 +51,6 @@ static float ProjectionMtx[16] = {
 };
 
 
-// Perspective Projection
 static float aspectRatio = 8.0f / 6.0f; // Width / Height
 static float near = 0.1f;
 static float far = 100.0f;

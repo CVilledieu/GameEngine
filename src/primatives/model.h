@@ -5,11 +5,24 @@
 
 typedef struct {
     int id;
-    float *originMtx; // Matrix for origin position and scale
-    float *ModelMtx; // Model matrix for transformations
+    float *OriginMtx; // Matrix for origin position and scale
+    float *CurrentMtx; // Model matrix for transformations
     Mesh *mesh; // The actual mesh data
 } Model;
 
 
-Model Model_Create(float position[3], MeshType type, int id); 
+typedef enum {
+    TYPE_SQUARE,
+    TYPE_CUBE,
+} MeshType;
+
+
+
+
+Model Model_Create(MeshType type, int id);
+
+
+void Model_Draw(Model *model);
+void Model_UpdateOrigin(Model *model);
+
 #endif

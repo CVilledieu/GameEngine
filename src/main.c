@@ -4,7 +4,7 @@
 
 #include "wnd.h"
 #include "shader.h"
-#include "mesh.h"
+#include "model.h"
 #include "camera.h"
 
 
@@ -17,10 +17,9 @@ int main(void){
     }
     Shader_Init();
     glEnable(GL_DEPTH_TEST);
-    Mesh box = Cube_CreateMesh();
-    box.ModelMtx[10] = 0.22f; // Set initial position
-    Mesh floor = Square_CreateMesh();
-
+    Model box = Model_Create(TYPE_SQUARE, 0);
+    box.CurrentMtx[10] = 0.2f; // Set initial position
+    
     Camera_Init();
     
     while(!glfwWindowShouldClose(wnd_main)){
@@ -29,8 +28,8 @@ int main(void){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         Camera_Set();
-        DrawMesh(&box);
-        DrawMesh(&floor);
+        Model_Draw(&box);
+        
 
         glfwSwapBuffers(wnd_main);
         glfwPollEvents();
