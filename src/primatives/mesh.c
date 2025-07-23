@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-void VAO_Set(Mesh *mesh) {
+static void Set_VAO(Mesh *mesh) {
     unsigned int VBO, EBO;
     glGenVertexArrays(1, &mesh->VAO);
     glGenBuffers(1, &VBO);
@@ -14,7 +14,7 @@ void VAO_Set(Mesh *mesh) {
     glBufferData(GL_ARRAY_BUFFER, mesh->VetexCount * sizeof(float), mesh->Vertices, GL_STATIC_DRAW);
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->IndexOrder * sizeof(unsigned int), mesh->Indices, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->IndexCount * sizeof(unsigned int), mesh->Indices, GL_STATIC_DRAW);
 
     //Indices 0-2 are position
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 7 * sizeof(float), (void*)0);
@@ -29,7 +29,7 @@ void VAO_Set(Mesh *mesh) {
 
 void DrawMesh(Mesh *mesh) {
     glBindVertexArray(mesh->VAO);
-    glDrawElements(GL_TRIANGLES, mesh->IndexOrder, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, mesh->IndexCount, GL_UNSIGNED_INT, 0);
     glBindVertexArray(0);
 }
 
@@ -50,14 +50,14 @@ static unsigned int Square_DrawIndices[] = { 0, 1, 2, 2, 3, 0};
 Mesh Square_CreateMesh() {
     Mesh newMesh;
     
-    newMesh.IndexOrder = sizeof(Square_DrawIndices) / sizeof(unsigned int);
+    newMesh.IndexCount = sizeof(Square_DrawIndices) / sizeof(unsigned int);
     newMesh.Indices = Square_DrawIndices;
 
     newMesh.VetexCount = sizeof(Square_Vertices) / sizeof(float);
     newMesh.Vertices = Square_Vertices;
 
     newMesh.VAO = 0;
-    VAO_Set(&newMesh);
+    Set_VAO(&newMesh);
     return newMesh;
 }
 
@@ -90,14 +90,14 @@ static unsigned int Cube_DrawIndices[] = {
 Mesh Cube_CreateMesh() {
     Mesh newMesh;
     
-    newMesh.IndexOrder = sizeof(Cube_DrawIndices) / sizeof(unsigned int);
+    newMesh.IndexCount = sizeof(Cube_DrawIndices) / sizeof(unsigned int);
     newMesh.Indices = Cube_DrawIndices;
 
     newMesh.VetexCount = sizeof(Cube_Vertices) / sizeof(float);
     newMesh.Vertices = Cube_Vertices;
 
     newMesh.VAO = 0;
-    VAO_Set(&newMesh);
+    Set_VAO(&newMesh);
     return newMesh;
 }
 

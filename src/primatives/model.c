@@ -57,6 +57,12 @@ void Model_UpdateOrigin(Model *model){
     memcpy(model->OriginMtx, model->CurrentMtx, sizeof(float) * 16);
 }
 
+void Model_UpdateBaseModelMtx(Model *model, float translate[3]) {
+    ModelMtx[3] = translate[0];
+    ModelMtx[7] = translate[1];
+    ModelMtx[11] = translate[2];
+}
+
 
 
 // ===========================================

@@ -15,6 +15,7 @@ typedef struct {
     int modelCount; // Number of models in the scene
     float *OriginMtx; // Matrix for origin position and scale
     Model *models;
+    
 } Scene;
 
 

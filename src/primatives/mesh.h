@@ -4,9 +4,10 @@
 
 typedef struct {
     unsigned int VAO;
-    int IndexOrder;
-    unsigned int *Indices;
+    int IndexCount;
     int VetexCount;
+    unsigned int *Indices;
+    
     float *Vertices;
     float *ModelMtx;
 } Mesh;

@@ -30,12 +30,16 @@ Scene Scene_Create(int id, float OriginVector[3]) {
 }
 
 
-void Scene_RemoveModel(Scene *scene, int modelId){
 
-}
 
-void Scene_AddModel(Model *model){
-    Camera_Init();
+void Scene_AddModel(Scene *scene, MeshType type){
+    if (scene->modelCount >= MAX_MODEL_COUNT) {
+        return;
+    }
+    Model model = Model_Create(type, scene->modelCount);
+    scene->models[scene->modelCount] = model;
+    scene->modelCount++;
+
 }
 
 //====================
@@ -44,15 +48,22 @@ void Scene_AddModel(Model *model){
 
 // Prepares the scene for rendering by performing necessary updates that do not need to be done every frame.
 void Scene_Load(Scene *scene){
-
+    Camera_Init();
 }
 
 void Scene_Render(Scene *scene) {
+    
     for (int index = 0; index < scene->modelCount; index++) {
         Model *model = &scene->models[index];
         if (model->mesh != NULL) {
-            Model_Draw(model); // Draw the model
+            Model_Draw(model); 
         }
     }
 }
 
+
+void Scene_UpdateOrigin(Scene *scene, float translation[3]){
+    scene->OriginMtx[3] += translation[0];
+    scene->OriginMtx[7] += translation[1];
+    scene->OriginMtx[11] += translation[2];
+}
