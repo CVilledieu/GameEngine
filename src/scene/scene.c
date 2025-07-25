@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "scene.h"
 #include "camera.h"
+#include <string.h>
 
 #define MAX_MODEL_COUNT 10 // Define a maximum number of models in a scene
 

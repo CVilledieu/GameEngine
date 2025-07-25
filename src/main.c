@@ -6,7 +6,7 @@
 #include "shader.h"
 #include "model.h"
 #include "camera.h"
-
+#include "terrain.h"
 
 
 
@@ -17,9 +17,9 @@ int main(void){
     }
     Shader_Init();
     glEnable(GL_DEPTH_TEST);
-    Model box = Model_Create(TYPE_SQUARE, 0);
-    box.CurrentMtx[10] = 0.2f; // Set initial position
-    
+    //Model box = Model_Create(TYPE_SQUARE, 0);
+    //box.CurrentMtx[10] = 0.2f; // Set initial position
+    Terrain terrain = Terrain_Create(10, 10); // Create a terrain with 10x10 tiles
     Camera_Init();
     
     while(!glfwWindowShouldClose(wnd_main)){
@@ -28,7 +28,7 @@ int main(void){
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         Camera_Set();
-        Model_Draw(&box);
+        Terrain_Draw(&terrain);
         
 
         glfwSwapBuffers(wnd_main);
